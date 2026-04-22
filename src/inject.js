@@ -42,11 +42,15 @@
                 const existing = JSON.parse(sessionStorage.getItem('insta-media-cache') || '{}');
                 medias.forEach(m => {
                     if (!existing[m.id]) existing[m.id] = [];
-                    // DEDUPLICATION: Check ID + Type + Index
-                    const isDuplicate = existing[m.id].find(ex => 
-                        ex.type === m.type && ex.index === m.index
-                    );
-                    if (!isDuplicate) {
+                    
+                    const existingIndex = existing[m.id].findIndex(ex => ex.index === m.index);
+                    
+                    if (existingIndex !== -1) {
+                        const existingMedia = existing[m.id][existingIndex];
+                        if (m.type === 'video' && existingMedia.type === 'image') {
+                            existing[m.id][existingIndex] = m;
+                        }
+                    } else {
                         existing[m.id].push(m);
                     }
                 });
