@@ -3,7 +3,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         chrome.downloads.download({
             url: message.url,
             filename: message.filename,
-            conflictAction: 'uniquify'
+            conflictAction: 'uniquify',
+            saveAs: false
         }, (downloadId) => {
             if (chrome.runtime.lastError) {
                 console.error('[InstaMediaAssist] Download failed:', chrome.runtime.lastError);

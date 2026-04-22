@@ -42,11 +42,19 @@
                 const existing = JSON.parse(sessionStorage.getItem('insta-media-cache') || '{}');
                 medias.forEach(m => {
                     if (!existing[m.id]) existing[m.id] = [];
-                    // DEDUPLICATION: Check ID + Type + Index
-                    const isDuplicate = existing[m.id].find(ex => 
-                        ex.type === m.type && ex.index === m.index
-                    );
-                    if (!isDuplicate) {
+                    
+                    // NEW DEDUPLICATION: Prioritize Video over Image for the same index
+                    const existingIndex = existing[m.id].findIndex(ex => ex.index === m.index);
+                    
+                    if (existingIndex !== -1) {
+                        const existingMedia = existing[m.id][existingIndex];
+                        // If we found a video but currently have an image, replace it
+                        if (m.type === 'video' && existingMedia.type === 'image') {
+                            existing[m.id][existingIndex] = m;
+                        }
+                        // Otherwise, if types match or we already have a video, do nothing
+                    } else {
+                        // Not in cache yet, add it
                         existing[m.id].push(m);
                     }
                 });
