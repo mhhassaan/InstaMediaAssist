@@ -1,0 +1,61 @@
+/* Base wrapper for the button */
+.insta-download-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 12px 0; /* Vertical spacing for Reels */
+    padding: 0;
+}
+
+/* The button itself */
+.insta-download-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0; /* Remove padding to avoid offsets */
+    margin: 0;
+    color: rgb(0, 0, 0); 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s, transform 0.1s;
+    width: 40px;  /* Standard IG icon touch area */
+    height: 40px;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .insta-download-btn {
+        color: rgb(255, 255, 255);
+    }
+}
+
+.insta-download-btn:hover {
+    color: rgb(0, 149, 246); /* Instagram blue */
+    transform: scale(1.1);
+}
+
+.insta-download-btn svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* 
+   FIX: Only apply horizontal layout if we are in the main Feed.
+   In the feed, icons are in a row. In Reels, they are in a column.
+*/
+section[class*="_a92"] .insta-download-wrapper, /* Desktop feed class hint */
+article section .insta-download-wrapper {
+    width: auto;
+    margin: 0 0 0 8px; /* Standard horizontal gap */
+    display: inline-flex;
+}
+
+/* Reels specific override: force center and remove horizontal margins */
+div[role="main"] .insta-download-wrapper,
+.x1q0g3np .insta-download-wrapper { /* Common Reels container class */
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100%;
+}
