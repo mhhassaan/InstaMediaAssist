@@ -59,3 +59,30 @@ div[role="main"] .insta-download-wrapper,
     margin-right: 0 !important;
     width: 100%;
 }
+
+/* Fallback overlay: used when a modal (e.g. a post/reel opened from a DM
+   attachment) has no Share icon to anchor next to. Sits on top of the media. */
+.insta-download-overlay {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: auto;
+    margin: 0;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.45);
+    border-radius: 50%;
+    padding: 6px;
+    display: inline-flex;
+}
+
+.insta-download-overlay .insta-download-btn {
+    color: #fff;
+    width: 28px;
+    height: 28px;
+}
+
+/* Shown briefly while we wait for the real video to be captured before downloading. */
+.insta-download-pending {
+    opacity: 0.5;
+    pointer-events: none;
+}
